@@ -55,8 +55,6 @@ while True:
                 response = arquivo.read()
                 arquivo.close()
 
-        header = 'HTTP/1.1 200 OK\n' #padrão HTTP
-
         if (nomearquivo.endswith(".jpg")):
                 mimetype = 'image/jpg'
         elif (nomearquivo.endswith(".png")):
@@ -70,7 +68,7 @@ while True:
         else:
                 mimetype = 'text/html'  #diversos tipos disponiveis de arquivo
 
-        header += 'Content-Type: ' + str(mimetype) + '\n\n' #completando o header HTTP
+        header ='HTTP/1.1 200 OK\nContent-Type: ' + str(mimetype) + '\n\n' #padrão http
 
         respostaEnvio = header.encode('utf-8') + resposta #junta cabeçalho e mensagem
         coneccao.send(respostaEnvio) #envia
