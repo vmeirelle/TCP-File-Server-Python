@@ -20,19 +20,19 @@ print("Servidor criado na porta: {}:{}".format(host,port))
 #Escutar a porta.
 servidor.listen(1)
 
-#Enquanto estabelicido
+#Aguardando conexão do usuario:
 while True:
         print('Aguardando conexão do cliente... ')
 
         coneccao, endereco = servidor.accept()
         print("Conexão em: {}".format(endereco))
 
-        #Recebendo menssagem do navegador
-        menssagem = coneccao.recv(1024).decode('utf-8')
-        #Divindo a menssagem
-        menssagemString = menssagem.split(' ')
+        #Recebendo mensagem do navegador
+        mensagem = coneccao.recv(1024).decode('utf-8')
+        #Divindo a mensagem
+        mensagemString = mensagem.split(' ')
         #Separando apenas o caminho
-        requisicao = menssagemString[1]
+        requisicao = mensagemString[1]
 
         print('Solicitação do cliente: ', requisicao)
 
@@ -71,5 +71,10 @@ while True:
         header ='HTTP/1.1 200 OK\nContent-Type: ' + str(mimetype) + '\n\n' #padrão http
 
         respostaEnvio = header.encode('utf-8') + resposta #junta cabeçalho e mensagem
-        coneccao.send(respostaEnvio) #envia
+        try:
+                coneccao.send(respostaEnvio) #envia
+                print('Enviado com sucesso.')
+        except:
+                print('Erro ao envio')
         coneccao.close() #fecha conexão
+        print('Conexão encerrada')
